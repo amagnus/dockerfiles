@@ -1,0 +1,15 @@
+FROM centos
+
+MAINTAINER adrien.magnus@gmail.com
+
+RUN yum -y update
+RUN yum -y groupinstall "Development Tools"
+
+WORKDIR /tmp
+RUN wget http://python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz
+RUN tar xf Python-2.7.6.tar.xz
+WORKDIR /tmp/Python-2.7.6
+RUN ./configure --prefix=/usr/local --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib"
+RUN make && make altinstall
+
+CMD /bin/bash
